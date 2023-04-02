@@ -1,0 +1,11 @@
+targets:
+  $default:
+    builders:
+      source_gen|combining_builder:
+        options:
+          build_extensions:
+            {
+              '^lib/data/data_source/remote/dto/{{}}.dart': 'lib/data/data_source/remote/dto/gen/{{}}.g.dart',
+              '^lib/data/data_source/remote/service/{{}}.dart': 'lib/data/data_source/remote/service/gen/{{}}.g.dart',
+              '^lib/domain/entities/{{}}.dart': 'lib/domain/entities/gen/{{}}.g.dart',
+            }
