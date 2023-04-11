@@ -1,19 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:weather/presentation/home_page/widget/astro_view.dart';
 import 'package:weather/util/dtx.dart';
 
 class WeatherDataCard extends StatelessWidget {
   final String humidity;
   final String uv;
   final String windSpeed;
+  final String sunrise;
+  final String sunset;
+  final String moonrise;
+  final String moonset;
   double padding;
 
-  WeatherDataCard(
-      {super.key,
-      required this.humidity,
-      required this.uv,
-      required this.windSpeed,
-      this.padding = 16});
+  WeatherDataCard({
+    super.key,
+    required this.humidity,
+    required this.uv,
+    required this.windSpeed,
+    this.padding = 16,
+    required this.sunrise,
+    required this.sunset,
+    required this.moonrise,
+    required this.moonset,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,24 +32,39 @@ class WeatherDataCard extends StatelessWidget {
       decoration: BoxDecoration(
           color: context.colorScheme.onPrimaryContainer,
           borderRadius: BorderRadius.circular(8)),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+      child: Column(
         children: [
-          WeatherDataItem(
-            icon: 'lib/assets/icons/wind_speed_ic.svg',
-            title: 'Wind',
-            data: '${windSpeed}km/h',
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              WeatherDataItem(
+                icon: 'lib/assets/icons/wind_speed_ic.svg',
+                title: 'Wind',
+                data: '${windSpeed}km/h',
+              ),
+              WeatherDataItem(
+                icon: 'lib/assets/icons/humidity.svg',
+                title: 'Humidity',
+                data: '$humidity%',
+              ),
+              WeatherDataItem(
+                icon: 'lib/assets/icons/uv_icon.svg',
+                title: 'Ultraviolet',
+                data: uv,
+              ),
+            ],
           ),
-          WeatherDataItem(
-            icon: 'lib/assets/icons/humidity.svg',
-            title: 'Humidity',
-            data: '$humidity%',
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Divider(color: context.colorScheme.primary,),
           ),
-          WeatherDataItem(
-            icon: 'lib/assets/icons/uv_icon.svg',
-            title: 'Ultraviolet',
-            data: uv,
-          ),
+          const SizedBox(height: 16,),
+          AstroView(
+            moonrise: moonrise,
+            moonset: moonset,
+            sunrise: sunrise,
+            sunset: sunset,
+          )
         ],
       ),
     );
@@ -78,9 +103,8 @@ class WeatherDataItem extends StatelessWidget {
         Text(
           title,
           style: context.typography.labelSmall?.copyWith(
-            color: context.colorScheme.primaryContainer.withOpacity(0.7),
-            fontSize: (context.typography.labelSmall?.fontSize?? 10) - 2
-          ),
+              color: context.colorScheme.primaryContainer.withOpacity(0.7),
+              fontSize: (context.typography.labelSmall?.fontSize ?? 10) - 2),
         )
       ],
     );

@@ -5,7 +5,7 @@ import 'package:weather/data/data_source/remote/service/weather_service.dart';
 import 'package:weather/data/mapper/weather_data_mapper.dart';
 import 'package:weather/data/mapper/weather_forecast_mapper.dart';
 import 'package:weather/data/repository/weather_repository_impl.dart';
-import 'package:weather/util/Const.dart';
+import 'package:weather/util/constnts.dart';
 import 'package:workmanager/workmanager.dart';
 import 'package:dio/dio.dart';
 

@@ -4,8 +4,7 @@ import 'package:weather/data/data_source/remote/service/weather_service.dart';
 import 'package:weather/data/mapper/weather_forecast_mapper.dart';
 import 'package:weather/domain/entities/weather_forecast.dart';
 import 'package:weather/domain/repository/weather_repository.dart';
-import 'package:weather/util/Const.dart';
-import 'package:weather/util/date_util.dart';
+import 'package:weather/util/constnts.dart';
 import 'package:weather/util/resource.dart';
 
 class WeatherRepositoryImpl extends WeatherRepository{

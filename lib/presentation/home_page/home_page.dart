@@ -85,40 +85,51 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Container(
         color: context.colorScheme.primaryContainer,
+        height: double.infinity,
         padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+        child: Stack(
           children: [
-            Expanded(
+            SingleChildScrollView(
+              scrollDirection: Axis.vertical,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  LastUpdate(lastUpdate: '${forecast?.lastUpdated}'),
-                  StatusView(status: '${currentData?.condition.text}'),
-                  TempWidget(temp: currentData?.tempInCelsius ?? 0),
-                  SummaryWidget(
-                    temp: '${currentData?.tempInCelsius.toInt().toString()}',
-                    feelsLike: currentData?.tempFeelsLikeInCelsius ?? 0,
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  WeatherDataCard(
-                    humidity: '${currentData?.humidity}',
-                    uv: '${currentData?.uv.toInt()}',
-                    windSpeed: '${currentData?.windSpeed.toInt()}',
-                  ),
-                  HoursListView(data: forecast?.getRemainingHours() ?? [])
+                  Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        LastUpdate(lastUpdate: '${forecast?.lastUpdated}'),
+                        const SizedBox(height: 6,),
+                        StatusView(status: '${currentData?.condition.text}'),
+                        TempWidget(temp: currentData?.tempInCelsius ?? 0),
+                        SummaryWidget(
+                          temp: '${currentData?.tempInCelsius.toInt().toString()}',
+                          feelsLike: currentData?.tempFeelsLikeInCelsius ?? 0,
+                        ),
+                      ],
+                    ),
+                  const SizedBox(height: 12,),
+                  Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        WeatherDataCard(
+                          humidity: '${currentData?.humidity}',
+                          uv: '${currentData?.uv.toInt()}',
+                          windSpeed: '${currentData?.windSpeed.toInt()}',
+                          sunset: '${forecast?.current.sunset}',
+                          sunrise: '${forecast?.current.sunrise}',
+                          moonset: '${forecast?.current.moonset}',
+                          moonrise: '${forecast?.current.moonrise}',
+                        ),
+                        const SizedBox(height: 12,),
+                        HoursListView(data: forecast?.getRemainingHours() ?? [])
+                      ],
+                    ),
                 ],
               ),
             )
           ],
         ),
-      ),
+      )
     );
   }
 

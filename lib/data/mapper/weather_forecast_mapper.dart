@@ -1,8 +1,8 @@
 import 'package:weather/data/data_source/remote/dto/forecast_dto.dart';
 import 'package:weather/data/mapper/weather_data_mapper.dart';
+import 'package:weather/domain/entities/day_data.dart';
 import 'package:weather/domain/entities/location.dart';
 import 'package:weather/domain/entities/weather_forecast.dart';
-import 'package:weather/util/dtx.dart';
 import 'package:weather/util/mapper.dart';
 
 class WeatherForecastMapper extends Mapper<WeatherForecast, ForecastDto> {
@@ -18,27 +18,30 @@ class WeatherForecastMapper extends Mapper<WeatherForecast, ForecastDto> {
 
   @override
   WeatherForecast toEntity(ForecastDto dto) {
-    final weatherData = dto.forecast.forecastDay.first.hour.mapIndexed(
-            (e, index) => MapEntry(index, _weatherDataMapper.toEntity(e)
-            )).toMap();
+    final days = dto.forecast.forecastDay.map((e) =>
+        DayData(
+          maxTemp: e.day.maxTemp,
+          minTemp: e.day.minTemp,
+          sunrise: e.astro.sunrise,
+          sunset: e.astro.sunset,
+          moonrise: e.astro.moonrise,
+          moonset: e.astro.moonset,
+          hours: e.hour.map((e) => _weatherDataMapper.toEntity(e)).toList(),
+        )).toList();
 
-    final astro = dto.forecast.forecastDay.first.astro;
     final locationDto = dto.location;
 
     return WeatherForecast(
-      lastUpdated: dto.location.localTime,
-      sunrise: astro.sunrise,
-      sunset: astro.sunset,
-      moonrise: astro.moonrise,
-      moonset: astro.moonset,
-      location: Location(
-        name: locationDto.name,
-        region: locationDto.region,
-        country: locationDto.country,
-        lat: locationDto.lat,
-        long: locationDto.lon,
-      ),
-      dataMap: weatherData,
+        current: days.first,
+        lastUpdated: dto.location.localTime,
+        location: Location(
+          name: locationDto.name,
+          region: locationDto.region,
+          country: locationDto.country,
+          lat: locationDto.lat,
+          long: locationDto.lon,
+        ),
+        days: days.skip(1).toList()
     );
   }
 

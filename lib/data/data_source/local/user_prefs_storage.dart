@@ -12,7 +12,7 @@ class UserPreferences{
     return ThemeMode.values[index];
   }
 
-  void saveThemeMode(ThemeMode mode) async{
+  void saveThemeMode(ThemeMode mode){
     prefs.setInt(_themeModeKey, mode.index);
   }
 

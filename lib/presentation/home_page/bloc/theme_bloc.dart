@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather/data/data_source/local/user_prefs_storage.dart';
 import 'package:weather/di/get_it.dart';
 
-class HomeState{
+class ThemeState{
   final int themeMode;
 
-  HomeState({this.themeMode = 0});
+  ThemeState({this.themeMode = 0});
 
 }
 
@@ -18,16 +18,16 @@ class ThemeChanged extends HomeEvent{
 
 }
 
-class HomeBloc extends Bloc<HomeEvent, HomeState>{
+class ThemeBloc extends Bloc<HomeEvent, ThemeState>{
   final prefs = getIt<UserPreferences>();
 
-  HomeBloc(): super(HomeState(themeMode: getIt<UserPreferences>().themeMode().index)){
+  ThemeBloc(): super(ThemeState(themeMode: getIt<UserPreferences>().themeMode().index)){
     on<ThemeChanged>(_themeEvent);
   }
 
-  void _themeEvent(ThemeChanged event, Emitter<HomeState> emit){
+  void _themeEvent(ThemeChanged event, Emitter<ThemeState> emit){
     prefs.saveThemeMode(ThemeMode.values[event.themeIndex]);
-    emit(HomeState());
+    emit(ThemeState(themeMode: event.themeIndex));
   }
 
 }

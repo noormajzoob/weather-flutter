@@ -40,7 +40,7 @@ class _WeatherService implements WeatherService {
     )
             .compose(
               _dio.options,
-              '/forecast.json?days=1&aqi=no&alerts=no',
+              '/forecast.json?days=4&aqi=no&alerts=no',
               queryParameters: queryParameters,
               data: _data,
             )

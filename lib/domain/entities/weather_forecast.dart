@@ -1,31 +1,25 @@
-import 'dart:convert';
-
 import 'package:jiffy/jiffy.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:weather/domain/entities/day_data.dart';
 import 'package:weather/domain/entities/location.dart';
 import 'package:weather/domain/entities/weather_data.dart';
+import 'package:weather/presentation/home_page/widget/day_view.dart';
 import 'package:weather/presentation/home_page/widget/hours_list_view.dart';
 
 part 'gen/weather_forecast.g.dart';
 
 @JsonSerializable()
 class WeatherForecast {
-  final String lastUpdated;
-  final String sunrise;
-  final String sunset;
-  final String moonrise;
-  final String moonset;
   final Location location;
-  final Map<int, WeatherData> dataMap;
+  final String lastUpdated;
+  final DayData current;
+  final List<DayData> days;
 
   WeatherForecast({
+    required this.current,
+    required this.days,
     required this.lastUpdated,
-    required this.sunrise,
-    required this.sunset,
-    required this.moonrise,
-    required this.moonset,
-    required this.location,
-    required this.dataMap,
+    required this.location
   });
 
   factory WeatherForecast.fromJson(Map<String, dynamic> json) =>
@@ -35,25 +29,33 @@ class WeatherForecast {
 
   WeatherData? getCurrentHour() {
     final hour = DateTime.now().hour;
-    return dataMap[hour];
+    return current.hours[hour];
   }
 
   List<HourModel> getRemainingHours() {
+    final data = <HourModel>[];
     final hour = DateTime.now().hour;
 
-    return dataMap.entries
-        .map(
-          (e) {
-            final dateTime =
-                Jiffy.parse(e.value.time, pattern: 'yyyy-mm-dd hh:mm');
+    final remainingHoursInDay = current.hours.skip(hour)
+        .map((e) {
+          final dateTime = Jiffy.parse(e.time, pattern: 'yyyy-mm-dd hh:mm');
 
-            return HourModel(
-              hour: dateTime.Hm,
-              temp: '${e.value.tempInCelsius.toInt()}'
-            );
-          },
-        )
-        .skip(hour)
-        .toList();
+          return HourModel(
+              hour: dateTime.Hm, temp: '${e.tempInCelsius.toInt()}');
+        });
+    final remainingHourInNextDay = days[1].hours.getRange(0, hour)
+    .map((e){
+      final dateTime = Jiffy.parse(e.time, pattern: 'yyyy-mm-dd hh:mm');
+
+      return HourModel(
+          hour: dateTime.Hm, temp: '${e.tempInCelsius.toInt()}');
+    });
+
+    return data..addAll(remainingHoursInDay)..addAll(remainingHourInNextDay);
   }
+
+  List<DayModel> getMaxMinOfNextDays(){
+    return days.map((e) => DayModel(e.maxTemp, e.minTemp)).toList();
+  }
+
 }

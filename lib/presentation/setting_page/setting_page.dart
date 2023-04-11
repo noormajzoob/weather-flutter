@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather/data/data_source/local/user_prefs_storage.dart';
 import 'package:weather/di/get_it.dart';
-import 'package:weather/presentation/home_page/bloc/home_bloc.dart';
+import 'package:weather/presentation/home_page/bloc/theme_bloc.dart';
 import 'package:weather/presentation/setting_page/widget/drop_down.dart';
 import 'package:weather/util/dtx.dart';
 import 'package:weather/work_manager/setup.dart';
@@ -40,7 +40,7 @@ class SettingPage extends StatelessWidget {
                           items: const ['Default', 'Light', 'Dark'],
                           selectedIndex: prefs.themeMode().index,
                           onSelect: (e, index) {
-                            context.read<HomeBloc>().add(ThemeChanged(themeIndex: index));
+                            context.read<ThemeBloc>().add(ThemeChanged(themeIndex: index));
                           },
                         ), context),
                   ),

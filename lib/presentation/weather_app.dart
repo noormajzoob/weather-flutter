@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather/di/get_it.dart';
-import 'package:weather/presentation/home_page/bloc/home_bloc.dart';
+import 'package:weather/presentation/home_page/bloc/theme_bloc.dart';
 import 'package:weather/presentation/home_page/bloc/weather_bloc.dart';
 import 'package:weather/presentation/home_page/home_page.dart';
 import 'package:weather/presentation/intro_page/intro_page.dart';
@@ -21,9 +21,9 @@ class WeatherApp extends StatelessWidget {
           create: (context) => WeatherBloc(weatherRepository: getIt.get())
             ..add(WeatherFetched()),
         ),
-        BlocProvider(create: (context) => HomeBloc()),
+        BlocProvider(create: (context) => ThemeBloc()),
       ],
-      child: BlocBuilder<HomeBloc, HomeState>(
+      child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (context, state) {
           print(state.themeMode);
           return MaterialApp(
