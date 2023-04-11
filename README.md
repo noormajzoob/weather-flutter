@@ -1,16 +1,28 @@
-# weather
+# Weather
 
-weather app
+Weather app with WeatherApi API.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+# Techs used 📌
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+ - Retrofit for api calls.
+ - bloc for state management.
+ - work manger for fetch data frequency.
+ - shared preferences for local storage.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Screenshoots
+
+![WhatsApp Image 2023-04-02 at 9 39 00 AM](https://user-images.githubusercontent.com/120308888/229340979-2872359d-016c-44e2-910b-efff07586e1a.jpeg)
+
+# -
+
+![WhatsApp Image 2023-04-02 at 9 41 34 AM](https://user-images.githubusercontent.com/120308888/229341007-1e76c6b2-138d-42d5-9860-6942aeacdc95.jpeg)
+
+# -
+
+https://user-images.githubusercontent.com/120308888/229340997-69dca5d2-f71c-4bf9-9087-a36793fe131a.mp4
+
+# -
+
+https://user-images.githubusercontent.com/120308888/229340967-49f5e702-c37b-4263-8ea8-8ec399dd3593.mp4
