@@ -25,4 +25,5 @@ Weather app with WeatherApi API.
 https://user-images.githubusercontent.com/120308888/231446541-2270503b-50c3-4474-afc0-19cb4cc43ef7.mp4
 
 # -
-https://user-images.githubusercontent.com/120308888/229340967-49f5e702-c37b-4263-8ea8-8ec399dd3593.mp4
+https://user-images.githubusercontent.com/120308888/231447197-810e7e53-d641-4c8e-9132-5c5da7ec9a79.mp4
+
