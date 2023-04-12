@@ -13,10 +13,12 @@ ForecastDayDto _$ForecastDayDtoFromJson(Map<String, dynamic> json) =>
           .map((e) => WeatherDataDto.fromJson(e as Map<String, dynamic>))
           .toList(),
       DayDto.fromJson(json['day'] as Map<String, dynamic>),
+      json['date'] as String,
     );
 
 Map<String, dynamic> _$ForecastDayDtoToJson(ForecastDayDto instance) =>
     <String, dynamic>{
+      'date': instance.date,
       'day': instance.day,
       'astro': instance.astro,
       'hour': instance.hour,

@@ -5,6 +5,7 @@ part 'gen/day_data.g.dart';
 
 @JsonSerializable()
 class DayData {
+  final String date;
   final double maxTemp;
   final double minTemp;
   final String sunrise;
@@ -14,6 +15,7 @@ class DayData {
   final List<WeatherData> hours;
 
   DayData({
+    required this.date,
     required this.maxTemp,
     required this.minTemp,
     required this.sunrise,

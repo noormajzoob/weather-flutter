@@ -20,6 +20,7 @@ class WeatherForecastMapper extends Mapper<WeatherForecast, ForecastDto> {
   WeatherForecast toEntity(ForecastDto dto) {
     final days = dto.forecast.forecastDay.map((e) =>
         DayData(
+          date: e.date,
           maxTemp: e.day.maxTemp,
           minTemp: e.day.minTemp,
           sunrise: e.astro.sunrise,

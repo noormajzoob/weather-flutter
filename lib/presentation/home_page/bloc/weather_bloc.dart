@@ -18,6 +18,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
         super(WeatherState()) {
     on<WeatherFetched>(_fetchWeather);
     on<Refresh>(_refresh);
+
   }
 
   void _fetchWeather(WeatherFetched event, Emitter<WeatherState> emit) async{

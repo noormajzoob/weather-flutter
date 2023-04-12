@@ -65,11 +65,11 @@ class AstroElem extends StatelessWidget {
       children: [
         SvgPicture.asset(
           icon,
-          width: 35,
-          height: 35,
+          width: 25,
+          height: 25,
         ),
         const SizedBox(
-          height: 12,
+          height: 8,
         ),
         Text(
           time,

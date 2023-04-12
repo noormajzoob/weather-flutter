@@ -55,7 +55,12 @@ class WeatherForecast {
   }
 
   List<DayModel> getMaxMinOfNextDays(){
-    return days.map((e) => DayModel(e.maxTemp, e.minTemp)).toList();
+    return days.map((e){
+      print(e.date);
+      final date = Jiffy.parse(e.date, pattern: 'yyyy-MM-dd');
+
+      return DayModel(e.maxTemp, e.minTemp, date.Md);
+    }).toList();
   }
 
 }

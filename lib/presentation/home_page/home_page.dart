@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:weather/presentation/home_page/bloc/weather_bloc.dart';
+import 'package:weather/presentation/home_page/widget/day_view.dart';
 import 'package:weather/presentation/home_page/widget/drawer_widget.dart';
-import 'package:weather/presentation/home_page/widget/loading_widget.dart';
 import 'package:weather/presentation/home_page/widget/error_widget.dart' as er;
 import 'package:weather/presentation/home_page/widget/hours_list_view.dart';
 import 'package:weather/presentation/home_page/widget/last_update.dart';
@@ -21,7 +21,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   final GlobalKey<ScaffoldState> key = GlobalKey<ScaffoldState>();
 
   @override
@@ -29,12 +28,10 @@ class _HomePageState extends State<HomePage> {
     final size = MediaQuery.of(context).size;
 
     return BlocBuilder<WeatherBloc, WeatherState>(builder: (context, state) {
-      if (state.status == WeatherStatus.loading) {
-        return const LoadingWidget();
-      } else if (state.status == WeatherStatus.success) {
-        return buildHome(size, context, state);
-      } else {
+      if (state.status == WeatherStatus.failure) {
         return er.ErrorWidget(error: state.error, onRefresh: () {});
+      } else {
+        return buildHome(size, context, state);
       }
     });
   }
@@ -71,80 +68,84 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget buildHome(Size size, BuildContext context, WeatherState state) {
+    final refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
     final forecast = state.forecast;
     final currentData = forecast?.getCurrentHour();
 
     return Scaffold(
-      key: key,
-      appBar: buildAppBar(context, state.forecast?.location.name ?? ''),
-      drawerEnableOpenDragGesture: true,
-      drawer: DrawerWidget(
-        onNavigateToSetting: () {
-
-        },
-      ),
-      body: Container(
-        color: context.colorScheme.primaryContainer,
-        height: double.infinity,
-        padding: const EdgeInsets.all(16),
-        child: Stack(
-          children: [
-            SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        LastUpdate(lastUpdate: '${forecast?.lastUpdated}'),
-                        const SizedBox(height: 6,),
-                        StatusView(status: '${currentData?.condition.text}'),
-                        TempWidget(temp: currentData?.tempInCelsius ?? 0),
-                        SummaryWidget(
-                          temp: '${currentData?.tempInCelsius.toInt().toString()}',
-                          feelsLike: currentData?.tempFeelsLikeInCelsius ?? 0,
-                        ),
-                      ],
-                    ),
-                  const SizedBox(height: 12,),
-                  Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        WeatherDataCard(
-                          humidity: '${currentData?.humidity}',
-                          uv: '${currentData?.uv.toInt()}',
-                          windSpeed: '${currentData?.windSpeed.toInt()}',
-                          sunset: '${forecast?.current.sunset}',
-                          sunrise: '${forecast?.current.sunrise}',
-                          moonset: '${forecast?.current.moonset}',
-                          moonrise: '${forecast?.current.moonrise}',
-                        ),
-                        const SizedBox(height: 12,),
-                        HoursListView(data: forecast?.getRemainingHours() ?? [])
-                      ],
-                    ),
-                ],
-              ),
-            )
-          ],
+        key: key,
+        appBar: buildAppBar(context, state.forecast?.location.name ?? ''),
+        drawerEnableOpenDragGesture: true,
+        drawer: DrawerWidget(
+          onNavigateToSetting: () {},
         ),
-      )
-    );
-  }
-
-  Widget loading(BuildContext context) {
-    return FractionallySizedBox(
-      heightFactor: 1,
-      widthFactor: 1,
-      child: Container(
-        color: context.colorScheme.primaryContainer,
-        child: Center(
-          child: CircularProgressIndicator(
-            color: context.colorScheme.onPrimaryContainer,
+        body: RefreshIndicator(
+          key: refreshIndicatorKey,
+          onRefresh: (){
+            context.read<WeatherBloc>().add(Refresh());
+            return context.read<WeatherBloc>().stream.last;
+          },
+          child: Container(
+            color: context.colorScheme.primaryContainer,
+            height: double.infinity,
+            padding: const EdgeInsets.all(16),
+            child: Stack(
+              children: [
+                SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          LastUpdate(lastUpdate: '${forecast?.lastUpdated}'),
+                          const SizedBox(
+                            height: 3,
+                          ),
+                          StatusView(status: '${currentData?.condition.text}'),
+                          TempWidget(
+                            temp: currentData?.tempInCelsius ?? 0,
+                            max: forecast?.current.maxTemp ?? 0,
+                            min: forecast?.current.minTemp ?? 0,
+                          ),
+                          SummaryWidget(
+                            temp:
+                                '${currentData?.tempInCelsius.toInt().toString()}',
+                            feelsLike: currentData?.tempFeelsLikeInCelsius ?? 0,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          WeatherDataCard(
+                            humidity: '${currentData?.humidity}',
+                            uv: '${currentData?.uv.toInt()}',
+                            windSpeed: '${currentData?.windSpeed.toInt()}',
+                            sunset: '${forecast?.current.sunset}',
+                            sunrise: '${forecast?.current.sunrise}',
+                            moonset: '${forecast?.current.moonset}',
+                            moonrise: '${forecast?.current.moonrise}',
+                          ),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          HoursListView(data: forecast?.getRemainingHours() ?? []),
+                          DaysView(
+                            data: forecast?.getMaxMinOfNextDays()?? [],
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }

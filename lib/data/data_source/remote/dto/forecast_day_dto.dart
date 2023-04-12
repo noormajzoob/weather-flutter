@@ -7,11 +7,12 @@ part 'gen/forecast_day_dto.g.dart';
 
 @JsonSerializable()
 class ForecastDayDto{
+  final String date;
   final DayDto day;
   final AstroDto astro;
   final List<WeatherDataDto> hour;
 
-  ForecastDayDto(this.astro, this.hour, this.day,);
+  ForecastDayDto(this.astro, this.hour, this.day, this.date,);
 
   factory ForecastDayDto.fromJson(Map<String, dynamic> json) => _$ForecastDayDtoFromJson(json);
   Map<String, dynamic> toJson() => _$ForecastDayDtoToJson(this);
