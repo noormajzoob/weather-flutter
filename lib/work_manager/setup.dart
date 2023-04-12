@@ -1,6 +1,4 @@
-import 'package:weather/data/data_source/local/user_prefs_storage.dart';
-import 'package:weather/di/get_it.dart';
-import 'package:weather/util/constnts.dart';
+import 'package:weather/util/constants.dart';
 import 'package:weather/work_manager/work_callback.dart';
 import 'package:workmanager/workmanager.dart';
 
@@ -10,8 +8,6 @@ void setupWorkManager() {
 }
 
 void _registerWeatherTask() {
-  final userPrefs = getIt<UserPreferences>();
-  final updateFreq = userPrefs.getUpdateFreq();
 
   Workmanager().registerOneOffTask(
     fetchTaskId,
@@ -23,4 +19,13 @@ void _registerWeatherTask() {
 
 void cancelWeatherWork(){
   Workmanager().cancelByUniqueName(fetchTaskName);
+}
+
+void updateWeatherTaskFrequency(int freq){
+  Workmanager().registerOneOffTask(
+      fetchTaskId,
+      fetchTaskName,
+      constraints: Constraints(networkType: NetworkType.connected),
+      existingWorkPolicy: ExistingWorkPolicy.replace
+  );
 }

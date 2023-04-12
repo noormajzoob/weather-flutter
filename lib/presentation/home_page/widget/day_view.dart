@@ -13,9 +13,16 @@ class DaysView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          'Days',
-          style: context.typography.titleMedium,
+          'Weekly forecast',
+          style: context.typography.titleMedium?.copyWith(
+            decoration: TextDecoration.underline,
+            fontWeight: FontWeight.bold
+          ),
           textAlign: TextAlign.start,
+
+        ),
+        const SizedBox(
+          height: 6,
         ),
         Column(
             children: List.generate(data.length, (index) => DayElem(title: data[index].title, temp: '${data[index].maxTemp.toInt()}°/${data[index].minTemp.toInt()}°'))
@@ -39,21 +46,28 @@ class DayElem extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            title,
-            style: context.typography.labelLarge
-                ?.copyWith(color: context.colorScheme.onPrimaryContainer),
+          Expanded(
+            child: Text(
+              title,
+              style: context.typography.labelLarge
+                  ?.copyWith(color: context.colorScheme.onPrimaryContainer),
+            ),
           ),
-          SvgPicture.asset(
-            'lib/assets/icons/sun.svg',
-            width: 25,
-            height: 25,
-            color: Colors.black,
+          Expanded(
+            child: SvgPicture.asset(
+              'lib/assets/icons/sun.svg',
+              width: 25,
+              height: 25,
+              color: Colors.black,
+            ),
           ),
-          Text(
-            temp,
-            style: context.typography.labelLarge
-                ?.copyWith(color: context.colorScheme.onPrimaryContainer),
+          Expanded(
+            child: Text(
+              temp,
+              style: context.typography.labelLarge
+                  ?.copyWith(color: context.colorScheme.onPrimaryContainer),
+              textAlign: TextAlign.end,
+            ),
           )
         ],
       ),

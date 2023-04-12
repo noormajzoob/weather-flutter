@@ -36,7 +36,10 @@ class HoursListView extends StatelessWidget {
       children: [
         Text(
             'Hours',
-            style: context.typography.titleMedium,
+            style: context.typography.titleMedium?.copyWith(
+              decoration: TextDecoration.underline,
+              fontWeight: FontWeight.bold
+            ),
           ),
         const SizedBox(width: 16,),
         SvgPicture.asset('lib/assets/icons/arraw_right.svg'),

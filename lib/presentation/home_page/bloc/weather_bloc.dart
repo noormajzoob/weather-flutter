@@ -1,7 +1,5 @@
-import 'dart:async';
 
-import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather/domain/entities/weather_forecast.dart';
 import 'package:weather/domain/repository/weather_repository.dart';
 
@@ -31,10 +29,16 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
         forecast: resource.data
       ));
     }else{
-      emit(state.copy(
-          status: WeatherStatus.failure,
-          error: resource.error
-      ));
+      if(state.forecast != null){
+        emit(state.copy(
+          status: WeatherStatus.success
+        ));
+      }else {
+        emit(state.copy(
+            status: WeatherStatus.failure,
+            error: resource.error
+        ));
+      }
     }
   }
 

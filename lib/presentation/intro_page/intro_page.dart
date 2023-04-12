@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rive/rive.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather/data/data_source/local/user_prefs_storage.dart';
 import 'package:weather/di/get_it.dart';
 import 'package:weather/util/dtx.dart';
@@ -82,7 +81,7 @@ class IntroPage extends StatelessWidget {
                         getIt<UserPreferences>().markIntroAsShown();
                         Navigator.of(context).push(
                           MaterialPageRoute(builder: (context){
-                            return const HomePage();
+                            return HomePage();
                           })
                         );
                       },
