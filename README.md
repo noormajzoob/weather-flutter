@@ -13,16 +13,16 @@ Weather app with WeatherApi API.
 
 # Screenshoots
 
-![WhatsApp Image 2023-04-02 at 9 39 00 AM](https://user-images.githubusercontent.com/120308888/229340979-2872359d-016c-44e2-910b-efff07586e1a.jpeg)
+![WhatsApp Image 2023-04-12 at 1 21 47 PM](https://user-images.githubusercontent.com/120308888/231446401-069c5c2e-a9d6-4ae3-b764-41398a0f07f5.jpeg)
 
 # -
-
-![WhatsApp Image 2023-04-02 at 9 41 34 AM](https://user-images.githubusercontent.com/120308888/229341007-1e76c6b2-138d-42d5-9860-6942aeacdc95.jpeg)
-
-# -
-
-https://user-images.githubusercontent.com/120308888/229340997-69dca5d2-f71c-4bf9-9087-a36793fe131a.mp4
+![WhatsApp Image 2023-04-12 at 1 38 49 PM](https://user-images.githubusercontent.com/120308888/231446455-61d4b9f7-84de-4460-9d33-a6f8dbdf823c.jpeg)
 
 # -
+![WhatsApp Image 2023-04-12 at 1 38 56 PM](https://user-images.githubusercontent.com/120308888/231446502-76595387-7813-4385-a105-ec4e5a2d8eff.jpeg)
 
+# -
+https://user-images.githubusercontent.com/120308888/231446541-2270503b-50c3-4474-afc0-19cb4cc43ef7.mp4
+
+# -
 https://user-images.githubusercontent.com/120308888/229340967-49f5e702-c37b-4263-8ea8-8ec399dd3593.mp4
